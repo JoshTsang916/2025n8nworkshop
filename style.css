@@ -1,20 +1,51 @@
-/* n8n Style Overrides & Custom Utilities */
+/* Brand Style Guide Implementation */
+
+/* 1. Global Texture & Background */
+body {
+    background-color: #1A1A1D;
+    /* Dark Iron Grey/Black */
+    /* Subtle Grain Texture */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
 
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
 }
 
-/* Card Styles mimicking n8n nodes */
-.n8n-note {
-    background-color: #2D2D2D;
-    border: 1px solid #3E3E3E;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    position: relative;
-    overflow: hidden;
+/* 2. Typography & Colors Overrides */
+h1,
+h2,
+h3,
+h4,
+.font-heading {
+    color: #FFB703;
+    /* Warm Amber */
+    text-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
 }
 
+.text-highlight {
+    color: #38BDF8;
+    /* Bright Blue */
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
+
+/* 3. Card Styles: "Forged Steel" / Wireframe feel */
+.n8n-note {
+    background: linear-gradient(135deg, rgba(40, 40, 45, 0.9) 0%, rgba(26, 26, 29, 0.95) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    /* Silicon Silver/Blue hint */
+    border-radius: 12px;
+    box-shadow:
+        0 4px 20px -5px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    /* Brushed metal rim */
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Tech Grid Background for Cards */
 .n8n-note::before {
     content: '';
     position: absolute;
@@ -22,16 +53,52 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+    background-image:
+        linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
     pointer-events: none;
+    z-index: 0;
 }
 
 .n8n-panel {
-    background-color: #2D2D2D;
-    border: 1px solid #4A4A4A;
-    border-radius: 12px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    background: rgba(30, 30, 35, 0.8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
     position: relative;
+}
+
+/* Glowing Edges for Inputs */
+input,
+textarea {
+    background-color: rgba(26, 26, 29, 0.8) !important;
+    border-color: #4A5568 !important;
+    transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #38BDF8 !important;
+    /* Bright Blue */
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2), inset 0 0 5px rgba(56, 189, 248, 0.1) !important;
+}
+
+/* Buttons: Forge Orange Glow */
+button[type="submit"] {
+    background: linear-gradient(135deg, #FFB703 0%, #FF8C00 100%) !important;
+    color: #1A1A1D !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 800 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 183, 3, 0.4);
+}
+
+button[type="submit"]:hover {
+    box-shadow: 0 0 30px rgba(255, 183, 3, 0.6);
+    transform: translateY(-2px);
 }
 
 /* Animations */
@@ -40,6 +107,7 @@ html {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -48,41 +116,35 @@ html {
 
 .animate-fade-in-up {
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0; /* Start hidden for animation */
+    opacity: 0;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.delay-100 {
+    animation-delay: 0.1s;
 }
 
-.animate-fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
+.delay-200 {
+    animation-delay: 0.2s;
 }
 
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-
-/* Form Elements Focus Glow */
-input:focus, textarea:focus {
-    box-shadow: 0 0 0 2px rgba(255, 109, 90, 0.2);
+.delay-300 {
+    animation-delay: 0.3s;
 }
 
-/* Scrollbar customization for webkit */
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #202020;
+    background: #1A1A1D;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #4A4A4A;
+    background: #4A5568;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #5A5A5A;
+    background: #FFB703;
 }

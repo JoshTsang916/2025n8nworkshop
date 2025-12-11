@@ -1,6 +1,5 @@
 /**
  * Configuration
- * Replace these placeholder URLs with your actual n8n production webhook URLs.
  */
 const CONFIG = {
     FORM_WEBHOOK: 'https://joshtsang0916.zeabur.app/webhook/2e8707c0-2d4f-4ed9-abf3-d86c5a68f304',
@@ -8,87 +7,199 @@ const CONFIG = {
 };
 
 // =========================================================================
-// 1. Canvas Background Animation (Simulating Node Connections)
+// 1. Circuit Board Animation (Tech Flow)
 // =========================================================================
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
 
 let width, height;
-let particles = [];
-const particleCount = 60; // Equivalent to "Nodes"
-const connectionDistance = 150; // Distance to draw lines
+let circuits = [];
+let nodes = [];
 
-// Particle Class
-class Particle {
-    constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.5; // Slow velocity X
-        this.vy = (Math.random() - 0.5) * 0.5; // Slow velocity Y
-        this.size = Math.random() * 2 + 1; // Random size
-    }
+// Configuration for visuals
+const GRID_SIZE = 40; // Spacing for grid points
+const COLOR_TRACE = 'rgba(56, 189, 248, 0.05)'; // Silicon Silver/Blue (faint)
+const COLOR_NODE = 'rgba(56, 189, 248, 0.3)';
+const COLOR_PACKET_HEAD = '#FFB703'; // Amber
+const COLOR_PACKET_TAIL = '#FF8C00'; // Orange
 
-    update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Bounce off edges
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
+class Node {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.litOpacity = 0;
+        this.connections = []; // Neighbors
     }
 
     draw() {
+        if (this.litOpacity > 0) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 183, 3, ${this.litOpacity})`; // Amber glow
+            ctx.fill();
+
+            // Glow ring
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 6, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(255, 183, 3, ${this.litOpacity * 0.5})`;
+            ctx.stroke();
+
+            this.litOpacity -= 0.05;
+            if (this.litOpacity < 0) this.litOpacity = 0;
+        } else {
+            // Idle state (very faint)
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 1, 0, Math.PI * 2);
+            ctx.fillStyle = COLOR_NODE;
+            ctx.fill();
+        }
+    }
+}
+
+class Packet {
+    constructor(path) {
+        this.path = path; // Array of Nodes
+        this.currentIndex = 0;
+        this.progress = 0; // 0 to 1 between nodes
+        this.speed = 0.15; // Speed of data flow
+        this.finished = false;
+
+        // Trigger start node
+        if (this.path.length > 0) {
+            this.path[0].litOpacity = 1;
+        }
+    }
+
+    update() {
+        this.progress += this.speed;
+
+        if (this.progress >= 1) {
+            this.progress = 0;
+            this.currentIndex++;
+
+            // Trigger next node
+            if (this.currentIndex < this.path.length) {
+                this.path[this.currentIndex].litOpacity = 1;
+            } else {
+                this.finished = true;
+            }
+        }
+    }
+
+    draw() {
+        if (this.finished || this.currentIndex >= this.path.length - 1) return;
+
+        const startNode = this.path[this.currentIndex];
+        const endNode = this.path[this.currentIndex + 1];
+
+        const x = startNode.x + (endNode.x - startNode.x) * this.progress;
+        const y = startNode.y + (endNode.y - startNode.y) * this.progress;
+
+        // Draw Electron/Packet
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'; // Main nodes
+        ctx.arc(x, y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = COLOR_PACKET_HEAD;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = COLOR_PACKET_TAIL;
         ctx.fill();
+        ctx.shadowBlur = 0;
     }
 }
 
-function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    initParticles();
-}
+function initGrid() {
+    nodes = [];
+    circuits = [];
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
 
-function initParticles() {
-    particles = [];
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
+    // Create Grid Nodes
+    const cols = Math.ceil(width / GRID_SIZE);
+    const rows = Math.ceil(height / GRID_SIZE);
+
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            // Add some randomness so it's not a perfect boring grid, but still aligned
+            if (Math.random() > 0.6) {
+                nodes.push(new Node(i * GRID_SIZE, j * GRID_SIZE));
+            }
+        }
     }
 }
+
+function findNeighbors() {
+    // Basic implementation: find nodes horizontally or vertically aligned within distance
+    // This is expensive O(N^2), but N is small (screen size / 40 ~ 500-1000 nodes)
+    nodes.forEach(node => {
+        node.connections = nodes.filter(other => {
+            if (node === other) return false;
+            const dist = Math.abs(node.x - other.x) + Math.abs(node.y - other.y);
+            // Linear Horizontal or Vertical neighbor
+            return (dist <= GRID_SIZE * 1.5) && (node.x === other.x || node.y === other.y);
+        });
+    });
+}
+
+function generateCircuit() {
+    // Create a random path walker
+    if (nodes.length === 0) return;
+
+    const startNode = nodes[Math.floor(Math.random() * nodes.length)];
+    let path = [startNode];
+    let current = startNode;
+    let steps = Math.floor(Math.random() * 10) + 5; // Path length
+
+    for (let i = 0; i < steps; i++) {
+        if (!current.connections || current.connections.length === 0) break;
+        // Move towards center sometimes? No, just random neighbor
+        const next = current.connections[Math.floor(Math.random() * current.connections.length)];
+        path.push(next);
+        current = next;
+    }
+
+    if (path.length > 2) {
+        circuits.push(new Packet(path));
+    }
+}
+
 
 function animate() {
     ctx.clearRect(0, 0, width, height);
 
-    // Update and draw all particles
-    for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
+    // Draw Static Grid Traces (Background)
+    ctx.strokeStyle = COLOR_TRACE;
+    ctx.lineWidth = 1;
+    // We won't draw *all* connections every frame, maybe just faint dots or pre-rendered lines.
+    // For performance, let's just draw nodes.
 
-        // Check connections
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+    nodes.forEach(node => node.draw());
 
-            if (distance < connectionDistance) {
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - distance / connectionDistance)})`;
-                ctx.lineWidth = 1;
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-            }
-        }
+    // Update and Draw Active Circuits
+    // Spawn new packet occasionally
+    if (Math.random() < 0.05) { // Spawn rate
+        generateCircuit();
     }
+
+    circuits.forEach((packet, index) => {
+        packet.update();
+        packet.draw();
+        if (packet.finished) {
+            circuits.splice(index, 1);
+        }
+    });
+
     requestAnimationFrame(animate);
 }
 
-window.addEventListener('resize', resize);
-resize();
+
+// Event Listeners
+window.addEventListener('resize', () => {
+    initGrid();
+    findNeighbors();
+});
+
+// Init
+initGrid();
+findNeighbors();
 animate();
 
 
@@ -106,40 +217,34 @@ form.addEventListener('submit', async (e) => {
     const originalBtnText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
-        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[#1A1A1D]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        Executing...
+        PROCESSING DATA...
     `;
 
     // Construct Payload
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-
-    // Add metadata
     data.timestamp = new Date().toISOString();
     data.source = 'landing-page';
 
     try {
-        // If placeholder URL is still there, we simulate success for demo purposes
         let response;
         if (CONFIG.FORM_WEBHOOK.includes('YOUR_FORM_WEBHOOK_URL')) {
             console.warn('Simulating form submission (No real Webhook URL set).');
-            await new Promise(resolve => setTimeout(resolve, 1500)); // Fake delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
             response = { ok: true };
         } else {
             response = await fetch(CONFIG.FORM_WEBHOOK, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
         }
 
         if (response.ok) {
-            // Success State
             form.classList.add('hidden');
             successMessage.classList.remove('hidden');
         } else {
@@ -163,8 +268,8 @@ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
 (function () {
     createChat({
         webhookUrl: CONFIG.CHAT_WEBHOOK,
-        mode: 'window', // 'window' | 'fullscreen'
-        target: '#n8n-chat', // This would target a specific div if mode is embedded
+        mode: 'window',
+        target: '#n8n-chat',
         showWelcomeScreen: true,
         defaultLanguage: 'zh',
         initialMessages: [
@@ -185,8 +290,8 @@ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
             right: '20px',
             bottom: '20px',
             zIndex: 9999,
-            backgroundColor: '#2D2D2D',
-            accentColor: '#FF6D5A', // n8n Orange
+            backgroundColor: '#1A1A1D', // Dark Iron Grey
+            accentColor: '#FFB703', // Warm Amber
         }
     });
 })();
