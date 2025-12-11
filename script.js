@@ -155,39 +155,30 @@ form.addEventListener('submit', async (e) => {
 });
 
 
+import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
 // =========================================================================
 // 3. n8n Chat Integration
 // =========================================================================
 (function () {
-    // Only load chat if we have a webhook URL (even a fake one just to show the widget)
-    // We'll use the CDN version of the chat
-
-    const script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.min.js";
-    script.async = true;
-    script.onload = () => {
-        if (window.createChat) {
-            window.createChat({
-                webhookUrl: CONFIG.CHAT_WEBHOOK,
-                mode: 'window', // 'window' | 'fullscreen'
-                target: '#n8n-chat', // This would target a specific div if mode is embedded
-                showWelcomeScreen: true,
-                defaultLanguage: 'zh',
-                initialMessages: [
-                    '嗨！我是您的工作坊小幫手。對課程有任何問題嗎？'
-                ],
-                style: {
-                    width: '360px',
-                    height: '600px',
-                    position: 'fixed',
-                    right: '20px',
-                    bottom: '20px',
-                    zIndex: 9999,
-                    backgroundColor: '#2D2D2D',
-                    accentColor: '#FF6D5A', // n8n Orange
-                }
-            });
+    createChat({
+        webhookUrl: CONFIG.CHAT_WEBHOOK,
+        mode: 'window', // 'window' | 'fullscreen'
+        target: '#n8n-chat', // This would target a specific div if mode is embedded
+        showWelcomeScreen: true,
+        defaultLanguage: 'zh',
+        initialMessages: [
+            '嗨！我是您的工作坊小幫手。對課程有任何問題嗎？'
+        ],
+        style: {
+            width: '360px',
+            height: '600px',
+            position: 'fixed',
+            right: '20px',
+            bottom: '20px',
+            zIndex: 9999,
+            backgroundColor: '#2D2D2D',
+            accentColor: '#FF6D5A', // n8n Orange
         }
-    };
-    document.body.appendChild(script);
+    });
 })();
