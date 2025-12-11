@@ -3,8 +3,8 @@
  * Replace these placeholder URLs with your actual n8n production webhook URLs.
  */
 const CONFIG = {
-    FORM_WEBHOOK: 'YOUR_FORM_WEBHOOK_URL', // e.g. https://joshtsang0916.zeabur.app/webhook/2e8707c0-2d4f-4ed9-abf3-d86c5a68f304
-    CHAT_WEBHOOK: 'YOUR_CHAT_WEBHOOK_URL'  // e.g. https://joshtsang0916.zeabur.app/webhook/687f1da6-66f0-4450-901f-b450bb5db667/chat
+    FORM_WEBHOOK: 'https://joshtsang0916.zeabur.app/webhook/2e8707c0-2d4f-4ed9-abf3-d86c5a68f304',
+    CHAT_WEBHOOK: 'https://joshtsang0916.zeabur.app/webhook/687f1da6-66f0-4450-901f-b450bb5db667/chat'  // e.g. 
 };
 
 // =========================================================================
