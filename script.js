@@ -4,7 +4,7 @@
  */
 const CONFIG = {
     FORM_WEBHOOK: 'https://joshtsang0916.zeabur.app/webhook/2e8707c0-2d4f-4ed9-abf3-d86c5a68f304',
-    CHAT_WEBHOOK: 'https://joshtsang0916.zeabur.app/webhook/687f1da6-66f0-4450-901f-b450bb5db667/chat'  // e.g. 
+    CHAT_WEBHOOK: 'https://joshtsang0916.zeabur.app/webhook/687f1da6-66f0-4450-901f-b450bb5db667/chat'
 };
 
 // =========================================================================
@@ -170,6 +170,14 @@ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
         initialMessages: [
             '嗨！我是您的工作坊小幫手。對課程有任何問題嗎？'
         ],
+        i18n: {
+            zh: {
+                title: 'n8n 工作坊小幫手',
+                subtitle: '歡迎詢問任何關於課程的問題！',
+                footer: 'Powered by n8n',
+                inputPlaceholder: '請輸入您的問題...',
+            }
+        },
         style: {
             width: '360px',
             height: '600px',
