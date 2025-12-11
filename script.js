@@ -204,11 +204,56 @@ animate();
 
 
 // =========================================================================
-// 2. Form Submission Handling
+// 2. Form Submission Handling & Logic
 // =========================================================================
 const form = document.getElementById('registrationForm');
 const submitBtn = document.getElementById('submitBtn');
 const successMessage = document.getElementById('successMessage');
+
+// New Fields
+const codeInput = document.getElementById('code');
+const paymentRadios = document.getElementsByName('payment_method');
+const bankAccountField = document.getElementById('bankAccountField');
+const bankAccountInput = document.getElementById('bank_account_last_5');
+
+// 2.1 URL Parameter Parsing (Auto-fill Code)
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+const urlCode = getUrlParameter('code');
+if (urlCode) {
+    codeInput.value = urlCode;
+}
+
+// 2.2 Payment Method Logic
+function handlePaymentChange() {
+    let selectedMethod;
+    for (const radio of paymentRadios) {
+        if (radio.checked) {
+            selectedMethod = radio.value;
+            break;
+        }
+    }
+
+    if (selectedMethod === 'bank_transfer') {
+        bankAccountField.classList.remove('hidden');
+        bankAccountInput.required = true;
+    } else {
+        bankAccountField.classList.add('hidden');
+        bankAccountInput.required = false;
+        bankAccountInput.value = ''; // specific cleanup
+    }
+}
+
+// Add listeners to radios
+for (const radio of paymentRadios) {
+    radio.addEventListener('change', handlePaymentChange);
+}
+
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -229,6 +274,11 @@ form.addEventListener('submit', async (e) => {
     const data = Object.fromEntries(formData.entries());
     data.timestamp = new Date().toISOString();
     data.source = 'landing-page';
+
+    // Ensure conditional field is clean
+    if (data.payment_method !== 'bank_transfer') {
+        delete data.bank_account_last_5;
+    }
 
     try {
         let response;

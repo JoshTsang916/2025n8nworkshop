@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh的 n8n 自動化實戰工作坊 | 用 AI 來創造</title>
+    <title>Josh 的 n8n 自動化實戰工作坊(VIP封測場) | 用 AI 來創造</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom Styles -->
@@ -60,9 +60,9 @@
                             <h3 class="text-lg font-bold text-[#FFB703] mb-1">Workshop Info</h3>
                             <div class="space-y-2 text-gray-300">
                                 <p class="flex items-center"><span class="font-semibold w-12 text-[#38BDF8]">時間</span>
-                                    2025年 待定</p>
+                                    2025/12/26(五) 18:30 - 21:30 & 2025/01/02(五) 18:30 - 21:30<br>兩堂共六小時</p>
                                 <p class="flex items-center"><span class="font-semibold w-12 text-[#38BDF8]">地點</span>
-                                    高雄市 (詳細地點待通知)</p>
+                                    高雄市新興區中正三路55號27樓<br>Wee威易聯合辦公室(中正店27F)</p>
                             </div>
                         </div>
                     </div>
@@ -103,50 +103,61 @@
 
                 <form id="registrationForm" class="space-y-5">
 
-                    <!-- Name -->
+                    <!-- Prerequisites Checkbox -->
                     <div class="group">
-                        <label for="name"
-                            class="block text-sm font-medium text-gray-400 mb-1 group-focus-within:text-[#FF6D5A] transition-colors">Name
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="name" name="name" required
-                            class="w-full bg-[#202020] border border-gray-600 rounded-md px-4 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF6D5A] focus:ring-1 focus:ring-[#FF6D5A] transition-all"
-                            placeholder="填寫您的姓名">
+                        <label class="flex items-start space-x-3 cursor-pointer">
+                            <input type="checkbox" id="prerequisite" name="prerequisite" required
+                                class="form-checkbox h-5 w-5 text-[#FF6D5A] bg-[#202020] border-gray-600 rounded focus:ring-[#FF6D5A] focus:ring-offset-[#202020] mt-1">
+                            <span class="text-sm text-gray-300">
+                                我已詳讀完課前須知，沒問題
+                            </span>
+                        </label>
                     </div>
 
-                    <!-- Email -->
+                    <!-- Beta Test Code -->
                     <div class="group">
-                        <label for="email"
-                            class="block text-sm font-medium text-gray-400 mb-1 group-focus-within:text-[#FF6D5A] transition-colors">Email
-                            <span class="text-red-500">*</span></label>
-                        <input type="email" id="email" name="email" required
-                            class="w-full bg-[#202020] border border-gray-600 rounded-md px-4 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF6D5A] focus:ring-1 focus:ring-[#FF6D5A] transition-all"
-                            placeholder="example@email.com">
+                        <label for="code"
+                            class="block text-sm font-medium text-gray-400 mb-1 group-focus-within:text-[#FF6D5A] transition-colors">封測報名序號</label>
+                        <input type="text" id="code" name="code" required readonly
+                            class="w-full bg-[#202020] border border-gray-600 rounded-md px-4 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF6D5A] focus:ring-1 focus:ring-[#FF6D5A] transition-all cursor-not-allowed opacity-75"
+                            placeholder="請使用專屬連結進入自動填寫">
                     </div>
 
-                    <!-- Job -->
+                    <!-- Payment Method -->
                     <div class="group">
-                        <label for="job"
-                            class="block text-sm font-medium text-gray-400 mb-1 group-focus-within:text-[#FF6D5A] transition-colors">Current
-                            Job</label>
-                        <input type="text" id="job" name="job"
-                            class="w-full bg-[#202020] border border-gray-600 rounded-md px-4 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF6D5A] focus:ring-1 focus:ring-[#FF6D5A] transition-all"
-                            placeholder="目前職業">
+                        <label class="block text-sm font-medium text-gray-400 mb-3">選擇付款方式</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="payment_method" value="linepay" required class="peer sr-only">
+                                <div
+                                    class="p-4 rounded-lg border border-gray-600 bg-[#202020] hover:border-[#FF6D5A] peer-checked:border-[#FF6D5A] peer-checked:bg-[#FF6D5A]/10 transition-all text-center">
+                                    <span class="block text-white font-medium">Line Pay</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="payment_method" value="bank_transfer" required
+                                    class="peer sr-only">
+                                <div
+                                    class="p-4 rounded-lg border border-gray-600 bg-[#202020] hover:border-[#FF6D5A] peer-checked:border-[#FF6D5A] peer-checked:bg-[#FF6D5A]/10 transition-all text-center">
+                                    <span class="block text-white font-medium">匯款</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
-                    <!-- Problem -->
-                    <div class="group">
-                        <label for="problem"
-                            class="block text-sm font-medium text-gray-400 mb-1 group-focus-within:text-[#FF6D5A] transition-colors">Goal
-                            / Problem <span class="text-red-500">*</span></label>
-                        <textarea id="problem" name="problem" required rows="3"
-                            class="w-full bg-[#202020] border border-gray-600 rounded-md px-4 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF6D5A] focus:ring-1 focus:ring-[#FF6D5A] transition-all resize-none"
-                            placeholder="你想解決什麼問題？"></textarea>
+                    <!-- Bank Account Last 5 Digits (Conditional) -->
+                    <div id="bankAccountField" class="group hidden animate-fade-in">
+                        <label for="bank_account_last_5"
+                            class="block text-sm font-medium text-gray-400 mb-1 group-focus-within:text-[#FF6D5A] transition-colors">匯款帳號後五碼</label>
+                        <input type="text" id="bank_account_last_5" name="bank_account_last_5"
+                            class="w-full bg-[#202020] border border-gray-600 rounded-md px-4 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF6D5A] focus:ring-1 focus:ring-[#FF6D5A] transition-all"
+                            placeholder="輸入後五碼" maxlength="5" pattern="\d{5}">
                     </div>
 
                     <!-- Submit Button -->
                     <button type="submit" id="submitBtn"
                         class="w-full bg-[#FF6D5A] hover:bg-[#ff8676] text-white font-bold py-3 px-4 rounded-md shadow-lg shadow-[#FF6D5A]/20 transform transition hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center space-x-2">
-                        <span>Execute Workflow</span>
+                        <span>確認報名！！</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -174,7 +185,7 @@
         </div>
 
         <footer class="mt-20 text-center text-gray-600 text-sm">
-            <p>&copy; 2025 Josh's Workshop. Powered by <span class="text-[#FF6D5A]">n8n</span>.</p>
+            <p>&copy; 2025 Josh's Workshop.</p>
         </footer>
 
     </div>
