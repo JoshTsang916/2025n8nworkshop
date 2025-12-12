@@ -252,6 +252,18 @@ async function submitFormData(type, clickedBtn) {
         if (response.ok) {
             form.classList.add('hidden');
             successMessage.classList.remove('hidden');
+
+            // Dynamic Success Message
+            const successTitle = successMessage.querySelector('h3');
+            const successBody = successMessage.querySelector('p');
+
+            if (type === 'interest') {
+                successTitle.textContent = 'Subscription Confirmed!';
+                successBody.textContent = '已收到您的訂閱，之後有正式工作坊的資訊會第一時間通知您！';
+            } else {
+                successTitle.textContent = 'Application Received!';
+                successBody.textContent = '已收到你的申請，若有釋出封測資格會第一時間寄送信件通知！';
+            }
         } else {
             throw new Error('Network response was not ok');
         }
