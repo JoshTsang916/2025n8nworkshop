@@ -179,15 +179,33 @@
                             placeholder="請輸入您的 Email">
                     </div>
 
-                    <!-- Submit Button -->
-                    <button type="submit" id="submitBtn"
-                        class="w-full bg-[#FF6D5A] hover:bg-[#ff8676] text-white font-bold py-3 px-4 rounded-md shadow-lg shadow-[#FF6D5A]/20 transform transition hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center space-x-2">
-                        <span>確認申請</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                    </button>
+                    <!-- Why Apply (New Field) -->
+                    <div class="group">
+                        <label for="reason"
+                            class="block text-sm font-medium text-gray-400 mb-1 group-focus-within:text-[#FF6D5A] transition-colors">為什麼想要申請這次封測工作坊？</label>
+                        <textarea id="reason" name="reason" rows="3" required
+                            class="w-full bg-[#202020] border border-gray-600 rounded-md px-4 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF6D5A] focus:ring-1 focus:ring-[#FF6D5A] transition-all"
+                            placeholder="請簡述您的申請動機..."></textarea>
+                    </div>
+
+                    <!-- Buttons Group -->
+                    <div class="space-y-3 pt-2">
+                        <!-- Main Apply Button -->
+                        <button type="button" id="btnApply"
+                            class="w-full bg-[#FF6D5A] hover:bg-[#ff8676] text-white font-bold py-3 px-4 rounded-md shadow-lg shadow-[#FF6D5A]/20 transform transition hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center space-x-2">
+                            <span>確認申請</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </button>
+
+                        <!-- Interest Button -->
+                        <button type="button" id="btnInterest"
+                            class="w-full bg-transparent border border-gray-600 hover:border-[#38BDF8] text-gray-400 hover:text-[#38BDF8] font-medium py-3 px-4 rounded-md transition-colors flex items-center justify-center space-x-2 text-sm">
+                            <span>可惜這次時間不行，但想收到後續正式工作坊的資訊！</span>
+                        </button>
+                    </div>
 
                 </form>
 

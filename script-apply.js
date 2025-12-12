@@ -209,21 +209,23 @@ animate();
 // 2. Beta Application Form Logic
 // =========================================================================
 const form = document.getElementById('applyForm');
-const submitBtn = document.getElementById('submitBtn');
+const btnApply = document.getElementById('btnApply');
+const btnInterest = document.getElementById('btnInterest');
 const successMessage = document.getElementById('successMessage');
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
+// Helper to submit data
+async function submitFormData(type, clickedBtn) {
     // UI Feedback: Loading
-    const originalBtnText = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `
-        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[#1A1A1D]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    const originalBtnText = clickedBtn.innerHTML;
+    const allBtns = form.querySelectorAll('button');
+    allBtns.forEach(btn => btn.disabled = true); // Disable all buttons
+
+    clickedBtn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        PROCESSING DATA...
+        PROCESSING...
     `;
 
     // Construct Payload
@@ -231,6 +233,7 @@ form.addEventListener('submit', async (e) => {
     const data = Object.fromEntries(formData.entries());
     data.timestamp = new Date().toISOString();
     data.source = 'beta-application'; // Identify source
+    data.type = type; // 'apply' or 'interest'
 
     try {
         let response;
@@ -255,10 +258,36 @@ form.addEventListener('submit', async (e) => {
 
     } catch (error) {
         console.error('Error:', error);
-        alert('申請提交失敗，請檢查網路或稍後再試。');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
+        alert('提交失敗，請檢查網路或稍後再試。');
+        allBtns.forEach(btn => btn.disabled = false);
+        clickedBtn.innerHTML = originalBtnText;
     }
+}
+
+// Handler for "Apply" (Full Validation)
+btnApply.addEventListener('click', () => {
+    if (form.reportValidity()) {
+        submitFormData('apply', btnApply);
+    }
+});
+
+// Handler for "Interest" (Partial Validation)
+btnInterest.addEventListener('click', () => {
+    // Determine optional fields that should be skipped for "Interest"
+    const prerequisite = document.getElementById('prerequisite');
+    const reason = document.getElementById('reason');
+
+    // Temporarily remove required
+    prerequisite.required = false;
+    reason.required = false;
+
+    if (form.reportValidity()) {
+        submitFormData('interest', btnInterest);
+    }
+
+    // Restore required (in case user changes mind and clicks apply later)
+    prerequisite.required = true;
+    reason.required = true;
 });
 
 
