@@ -213,8 +213,7 @@ const successMessage = document.getElementById('successMessage');
 // New Fields
 const codeInput = document.getElementById('code');
 const paymentRadios = document.getElementsByName('payment_method');
-const bankAccountField = document.getElementById('bankAccountField');
-const bankAccountInput = document.getElementById('bank_account_last_5');
+const bankTransferMessage = document.getElementById('bankTransferMessage');
 
 // 2.1 URL Parameter Parsing (Auto-fill Code)
 function getUrlParameter(name) {
@@ -240,12 +239,9 @@ function handlePaymentChange() {
     }
 
     if (selectedMethod === 'bank_transfer') {
-        bankAccountField.classList.remove('hidden');
-        bankAccountInput.required = true;
+        bankTransferMessage.classList.remove('hidden');
     } else {
-        bankAccountField.classList.add('hidden');
-        bankAccountInput.required = false;
-        bankAccountInput.value = ''; // specific cleanup
+        bankTransferMessage.classList.add('hidden');
     }
 }
 
@@ -277,7 +273,7 @@ form.addEventListener('submit', async (e) => {
 
     // Ensure conditional field is clean
     if (data.payment_method !== 'bank_transfer') {
-        delete data.bank_account_last_5;
+        // No extra fields to clean up
     }
 
     try {
