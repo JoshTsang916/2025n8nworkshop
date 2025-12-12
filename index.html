@@ -34,7 +34,7 @@
                 n8n 自動化實戰工作坊
             </h1>
             <h2 class="text-xl sm:text-2xl text-gray-300 font-medium mb-2">
-                打造你的 24 小時數位員工，從零開始的自動化實戰。
+                從零開始的自動化實戰，VIP 封測報名。
             </h2>
             <p class="text-sm text-[#38BDF8] tracking-widest uppercase opacity-80">Design by Josh</p>
         </div>
@@ -58,11 +58,22 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-bold text-[#FFB703] mb-1">Workshop Info</h3>
-                            <div class="space-y-2 text-gray-300">
-                                <p class="flex items-center"><span class="font-semibold w-12 text-[#38BDF8]">時間</span>
-                                    2025/12/26(五) 18:30 - 21:30 & 2025/01/02(五) 18:30 - 21:30<br>兩堂共六小時</p>
-                                <p class="flex items-center"><span class="font-semibold w-12 text-[#38BDF8]">地點</span>
-                                    高雄市新興區中正三路55號27樓<br>Wee威易聯合辦公室(中正店27F)</p>
+                            <div class="space-y-4 text-gray-300">
+                                <div class="flex items-start">
+                                    <span class="font-semibold w-12 text-[#38BDF8] shrink-0 mt-0.5">時間</span>
+                                    <div class="leading-relaxed">
+                                        <div>2025/12/26(五) 18:30 - 21:30 & </div>
+                                        <div>2025/01/02(五) 18:30 - 21:30</div>
+                                        <div>兩堂共六小時</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="font-semibold w-12 text-[#38BDF8] shrink-0 mt-0.5">地點</span>
+                                    <div class="leading-relaxed">
+                                        <div>高雄市新興區中正三路55號27樓</div>
+                                        <div>Wee威易聯合辦公室(中正店27F)</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,10 +91,21 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-bold text-yellow-500 mb-1">課前須知</h3>
-                            <p class="text-gray-300 text-sm leading-relaxed">
-                                本課程包含預錄影片作業，報名後請務必檢查信箱並於課前完成設定，以確保當日學習效果。
-                            </p>
+                            <h3 class="text-lg font-bold text-yellow-500 mb-2">【VIP 封測報名須知 & 承諾】</h3>
+                            <div class="text-gray-300 text-sm leading-relaxed space-y-3">
+                                <p><strong
+                                        class="text-yellow-500/90">課前預備：</strong>本課程包含重要預錄教學（帳號註冊與環境建置），報名後請密切留意信箱，並務必於課前完成設定，確保當日能直接進入實戰環節。
+                                </p>
+                                <p><strong class="text-yellow-500/90">硬體需求：</strong>請自備筆記型電腦與充電線（不建議使用
+                                    iPad/平板）。因涉及大量節點拖拉操作，強烈建議攜帶滑鼠（但 Macbook 觸控板很好用就沒關係）。</p>
+                                <p><strong class="text-yellow-500/90">支付工具：</strong>實作需串接 AI 與雲端服務，課前預備會需要在 OpenAI
+                                    平台綁定信用卡並刷卡 5 美金（若不想刷卡可以跟我說，會有預備方案，5 美金可以用很久大家不用擔心）。</p>
+                                <p><strong class="text-yellow-500/90">封測回饋：</strong>作為首批 VIP
+                                    成員，您的意見至關重要。課後需填寫回饋表單，並在任一社群媒體（FB/IG/Threads）分享您的自動化成果或學習心得。</p>
+                                <p><strong
+                                        class="text-yellow-500/90">出席承諾：</strong>本工作坊為連貫性實作，第二堂課將延續第一堂進度，請確保兩天（12/26、1/2）皆能準時出席。
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,13 +127,23 @@
 
                     <!-- Prerequisites Checkbox -->
                     <div class="group">
-                        <label class="flex items-start space-x-3 cursor-pointer">
+                        <label class="flex items-center space-x-3 cursor-pointer">
                             <input type="checkbox" id="prerequisite" name="prerequisite" required
-                                class="form-checkbox h-5 w-5 text-[#FF6D5A] bg-[#202020] border-gray-600 rounded focus:ring-[#FF6D5A] focus:ring-offset-[#202020] mt-1">
+                                class="form-checkbox h-5 w-5 text-[#FF6D5A] bg-[#202020] border-gray-600 rounded focus:ring-[#FF6D5A] focus:ring-offset-[#202020]">
                             <span class="text-sm text-gray-300">
-                                我已詳讀完課前須知，沒問題
+                                我已詳讀完 VIP 封測報名須知，沒問題
                             </span>
                         </label>
+                    </div>
+
+                    <!-- Beta Test Code -->
+                    <div class="group">
+                        <label for="name"
+                            class="block text-sm font-medium text-gray-400 mb-1 group-focus-within:text-[#FF6D5A] transition-colors">姓名</label>
+                        <input type="text" id="name" name="name" required
+                            class="w-full bg-[#202020] border border-gray-600 rounded-md px-4 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF6D5A] focus:ring-1 focus:ring-[#FF6D5A] transition-all"
+                            placeholder="請輸入您的姓名">
+                        <p class="text-xs text-gray-500 mt-1">製作封測貢獻證書用（填你希望在證書上出現的名字即可）</p>
                     </div>
 
                     <!-- Beta Test Code -->
@@ -125,7 +157,7 @@
 
                     <!-- Payment Method -->
                     <div class="group">
-                        <label class="block text-sm font-medium text-gray-400 mb-3">選擇付款方式</label>
+                        <label class="block text-sm font-medium text-gray-400 mb-3">選擇繳費方式</label>
                         <div class="grid grid-cols-2 gap-4">
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="payment_method" value="linepay" required class="peer sr-only">
