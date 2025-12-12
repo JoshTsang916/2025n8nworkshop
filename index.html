@@ -22,7 +22,7 @@
     <canvas id="backgroundCanvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
 
     <!-- Main Container -->
-    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-2 py-12 sm:px-6 lg:px-8">
 
         <!-- Header / Hero -->
         <div class="text-center mb-12 max-w-3xl animate-fade-in-up">
@@ -47,17 +47,23 @@
 
                 <!-- Info Card -->
                 <div class="n8n-note p-4 sm:p-6 transform transition hover:-translate-y-1 duration-300">
-                    <div class="flex items-start space-x-3 sm:space-x-4">
-                        <div
-                            class="flex-shrink-0 w-10 h-10 rounded-lg bg-[#FFB703]/20 flex items-center justify-center text-[#FFB703]">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
+                    <div class="flex flex-col sm:flex-row sm:space-x-4">
+                        <!-- Icon & Title (Mobile: Row, Desktop: Icon only) -->
+                        <div class="flex items-center space-x-3 sm:items-start sm:space-x-0 w-full sm:w-auto">
+                            <div
+                                class="flex-shrink-0 w-10 h-10 rounded-lg bg-[#FFB703]/20 flex items-center justify-center text-[#FFB703]">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-[#FFB703] sm:hidden">Workshop Info</h3>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-[#FFB703] mb-1">Workshop Info</h3>
+
+                        <!-- Content -->
+                        <div class="mt-4 sm:mt-0 w-full">
+                            <h3 class="hidden sm:block text-lg font-bold text-[#FFB703] mb-1">Workshop Info</h3>
                             <div class="space-y-4 text-gray-300">
                                 <div class="flex items-start">
                                     <span class="font-semibold w-10 sm:w-12 text-[#38BDF8] shrink-0 mt-0.5">時間</span>
@@ -91,17 +97,23 @@
 
                 <!-- Warning Card -->
                 <div class="n8n-note p-4 sm:p-6 border-l-4 border-yellow-500 bg-opacity-50">
-                    <div class="flex items-start space-x-3 sm:space-x-4">
-                        <div
-                            class="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-500">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                                </path>
-                            </svg>
+                    <div class="flex flex-col sm:flex-row sm:space-x-4">
+                        <!-- Icon & Title (Mobile) -->
+                        <div class="flex items-center space-x-3 sm:items-start sm:space-x-0 w-full sm:w-auto">
+                            <div
+                                class="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-yellow-500 sm:hidden">【VIP 封測報名須知 & 承諾】</h3>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-yellow-500 mb-2">【VIP 封測報名須知 & 承諾】</h3>
+
+                        <!-- Content -->
+                        <div class="mt-4 sm:mt-0 w-full">
+                            <h3 class="hidden sm:block text-lg font-bold text-yellow-500 mb-2">【VIP 封測報名須知 & 承諾】</h3>
                             <div class="text-gray-300 text-sm leading-relaxed space-y-3">
                                 <p><strong
                                         class="text-yellow-500/90">課前預備：</strong>本課程包含重要預錄教學（帳號註冊與環境建置），報名後請密切留意信箱，並務必於課前完成設定，確保當日能直接進入實戰環節。
