@@ -323,13 +323,13 @@ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
         showWelcomeScreen: true,
         defaultLanguage: 'zh',
         initialMessages: [
-            '嗨！我是您的工作坊小幫手。對課程有任何問題嗎？'
+            '👋 Hi！我是 Josh 的 AI 助教「JoshBot」。 對於 12/26 的 n8n 自動化工作坊 有任何疑問嗎？ 關於課程內容、費用或準備工作，都可以問我喔！🚀'
         ],
         i18n: {
             zh: {
-                title: 'n8n 工作坊小幫手',
-                subtitle: '歡迎詢問任何關於課程的問題！',
-                footer: 'Powered by n8n',
+                title: 'JoshBot AI 助教',
+                subtitle: 'n8n 自動化工作坊專屬 AI',
+                footer: 'Powered by JoshBot',
                 inputPlaceholder: '請輸入您的問題...',
             }
         },
@@ -341,7 +341,7 @@ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
             bottom: '20px',
             zIndex: 9999,
             backgroundColor: '#1A1A1D', // Dark Iron Grey
-            accentColor: '#FFB703', // Warm Amber
+            accentColor: '#FF6D5A', // Secondary Color (Sunset Orange) for better contrast
         }
     });
 })();
